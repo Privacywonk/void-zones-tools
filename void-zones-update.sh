@@ -82,6 +82,8 @@ $FETCH -o "$ZONES_DIR/zeustracker_void_hosts.txt" "https://zeustracker.abuse.ch/
 $FETCH -o "$ZONES_DIR/disconnectmeTracking_void_hosts.txt" "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
 $FETCH -o "$ZONES_DIR/disconnectmeAd_void_hosts.txt" "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
 $FETCH -o "$ZONES_DIR/hostfileAd_hosts.txt" "https://hosts-file.net/ad_servers.txt"
+$FETCH -o "$ZONES_DIR/covid_hosts.txt" "https://raw.githubusercontent.com/COVID-19-CTI-LEAGUE/PUBLIC_RELEASE/master/COVID-19-CTI-LEAGUE-PIHOLE-DOMAIN-BLACKLIST.txt"
+
 
 
 if [ ! -f "$ZONES_DIR/pgl_void_hosts.txt" ] ; then
@@ -136,6 +138,9 @@ fi
 if [ ! -f "$ZONES_DIR/hostfileAd_hosts.txt" ] ; then
    echo "# No hosts from https://hosts-file.net/ad_servers.txt." > "$ZONES_DIR/hostfileAd_hosts.txt"
 fi
+if [ ! -f "$ZONES_DIR/covid_hosts.txt" ] ; then
+   echo "# No hosts from COVID-19-CTI-LEAGUE." > "$ZONES_DIR/covid_hosts.txt"
+fi
 
 
 /usr/local/bin/hosts2zones /tmp/local-void.zones \
@@ -157,4 +162,5 @@ fi
 							"$ZONES_DIR/disconnectmeTracking_void_hosts.txt" \
 							"$ZONES_DIR/disconnectmeAd_void_hosts.txt" \
 							"$ZONES_DIR/hostfileAd_hosts.txt" \
+							"$ZONES_DIR/covid_hosts.txt" \
   && /bin/mv /tmp/local-void.zones /var/unbound/local-void.zones
